@@ -55,5 +55,31 @@ namespace HandlerRepository
             return handler;
         }
 
+        /// <summary>
+        /// Versuch 4 - Handler über object zurück liefern (ähnlich dynamic)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public object GetHandlerForType_4<T>(T data) where T : DataBase
+        {
+            var type = typeof(IHandler<>).MakeGenericType(data.GetType());
+            var handler = _repo.FirstOrDefault(i => i.Key == type).Value;
+            return handler;
+        }
+
+        /// <summary>
+        /// Versuch 5 - Handler über Generics zurück liefern (Typinformationen extra mitgeben)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T2"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public T2 GetHandlerForType_5<T2, T>(DataBase data) where T2: IHandler<T> where T : DataBase
+        {
+            var type = typeof(IHandler<>).MakeGenericType(data.GetType());
+            var handler = _repo.FirstOrDefault(i => i.Key == type).Value;
+            return (T2) handler;
+        }
     }
 }
