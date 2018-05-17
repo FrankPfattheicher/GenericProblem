@@ -30,7 +30,7 @@ Die Daten werden als konkreter Typ übergeben.
 ```csharp
 public void HandleSomething(DataBase data)    
 {    
-    // Bestimmung des Handlers f�r den konkreten Datentyp.    
+    // Bestimmung des Handlers für den konkreten Datentyp.    
     var handler = _repo.GetHandlerForType_3(data);    
     Assert.IsNotNull(handler);    
     // Aufruf des Handlers ohne Cast zu einem zu diesem    
@@ -47,7 +47,7 @@ Und letzendlich ein Repository als DI container, das die Handler liefern soll (R
 public void Register<T>(object instance)
 ```
 
-mit zwei Versuchen den Handler als konkreten Typ zur�ck zu liefern
+mit zwei Versuchen den Handler als konkreten Typ zurück zu liefern
 
 ```csharp
 public IHandler<DataBase> GetHandlerForType_1(DataBase data)    
