@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HandlerRepository
 {
@@ -17,6 +16,22 @@ namespace HandlerRepository
             _repo.Register<IHandler<DataC>>(new HandlerForC());
         }
 
+        /// <summary>
+        /// Gewünschtes Verhalten
+        /// </summary>
+        /// <param name="data">Die Daten werden als konkreter Typ übergeben.</param>
+        public void HandleSomething(DataBase data)
+        {
+            // Bestimmung des Handlers für den konkreten Datentyp.
+            var handler = _repo.GetHandlerForType_3(data);
+            Assert.IsNotNull(handler);
+            // Aufruf des Handlers ohne Cast zu einem zu diesem
+            // Zeitpunkt nicht bekannten konkreten Typs
+            handler.DoSomething(data);
+        }
+
+
+
         // Versuch 1
         [TestMethod]
         public void GetHandler1_ForConcreteType()
@@ -24,6 +39,7 @@ namespace HandlerRepository
             var data = new DataB();
             var handler = _repo.GetHandlerForType_1(data);
             Assert.IsNotNull(handler);
+            handler.DoSomething(data);
         }
 
         [TestMethod]
@@ -32,6 +48,7 @@ namespace HandlerRepository
             var data = new DataB() as DataBase;
             var handler = _repo.GetHandlerForType_1(data);
             Assert.IsNotNull(handler);
+            handler.DoSomething(data);
         }
 
         // Versuch 2
@@ -41,6 +58,7 @@ namespace HandlerRepository
             var data = new DataB();
             var handler = _repo.GetHandlerForType_2(data);
             Assert.IsNotNull(handler);
+            handler.DoSomething(data);
         }
 
         [TestMethod]
@@ -49,6 +67,7 @@ namespace HandlerRepository
             var data = new DataB() as DataBase;
             IHandler<DataBase> handler = _repo.GetHandlerForType_2<DataBase>(data);
             Assert.IsNotNull(handler);
+            handler.DoSomething(data);
         }
 
         // Versuch 3
@@ -58,6 +77,7 @@ namespace HandlerRepository
             var data = new DataB();
             var handler = _repo.GetHandlerForType_3(data);
             Assert.IsNotNull((object)handler);
+            handler.DoSomething(data);
         }
 
         [TestMethod]
@@ -66,6 +86,7 @@ namespace HandlerRepository
             var data = new DataB() as DataBase;
             dynamic handler = _repo.GetHandlerForType_3(data);
             Assert.IsNotNull((object)handler);
+            handler.DoSomething(data);
         }
 
         // Versuch 4
@@ -75,6 +96,7 @@ namespace HandlerRepository
             var data = new DataB();
             object handler = _repo.GetHandlerForType_4(data);
             Assert.IsNotNull(handler);
+            //handler.DoSomething(data);    GEHT NICHT !
         }
 
         [TestMethod]
@@ -83,6 +105,7 @@ namespace HandlerRepository
             var data = new DataB() as DataBase;
             object handler = _repo.GetHandlerForType_4(data);
             Assert.IsNotNull(handler);
+            //handler.DoSomething(data);    GEHT NICHT !
         }
 
         // Versuch 5

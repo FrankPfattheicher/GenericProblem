@@ -1,6 +1,6 @@
 ﻿namespace HandlerRepository
 {
-    public class DataBase
+    public abstract class DataBase
     {
     }
 
